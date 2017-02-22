@@ -56,7 +56,7 @@ Before creating gender tag in XML file, Google Shopping Feed checks attributes i
 <rss xmlns:g="" version="2.0">
   <channel>
     <title>Title </title>
-    <link>http://someshop.com/link>
+    <link>http://someshop.com</link>
     <description>Description of product</description>
     <item>
 		<g:id>30004</g:id>
