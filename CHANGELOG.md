@@ -6,8 +6,8 @@ All notable changes to this project will be documented in this file. This projec
 - Back button to Feed Form
 - Manged stock check in system config for deciding what products go in XML
 
-### CHAGED:
-- Refactored Blocks and Controller
+### CHANGED:
+- Refactored Blocks, Controller and Feed Model
 
 ## 0.1.1 - 2017-02-22
 ### CHANGED:
