@@ -5,6 +5,9 @@ All notable changes to this project will be documented in this file. This projec
 ### ADDED:
 - Back button to Feed Form
 
+### CHAGED:
+- Refactored Blocks and Controller
+
 ## 0.1.1 - 2017-02-22
 ### CHANGED:
 - Fix invalid closing tag in readme
