@@ -42,7 +42,7 @@ class Stuntcoders_GoogleShopping_Block_Index_Grid extends Mage_Adminhtml_Block_W
         $this->addColumn('link', array(
             'header' => Mage::helper('stuntcoders_googleshopping')->__('Link'),
             'align' => 'left',
-            'index'     => 'path',
+            'index' => 'path',
             'renderer' => 'stuntcoders_googleshopping/index_grid_renderer_link',
         ));
 
