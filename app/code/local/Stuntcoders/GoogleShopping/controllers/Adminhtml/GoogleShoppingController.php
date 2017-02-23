@@ -1,6 +1,6 @@
 <?php
 
-class Stuntcoders_GoogleShopping_GoogleShoppingController extends Mage_Adminhtml_Controller_Action
+class Stuntcoders_GoogleShopping_Adminhtml_GoogleShoppingController extends Mage_Adminhtml_Controller_Action
 {
     public function indexAction()
     {

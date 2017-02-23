@@ -71,7 +71,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <Stuntcoders_GoogleShopping before="Mage_Adminhtml">Stuntcoders_GoogleShopping</Stuntcoders_GoogleShopping>
+                        <Stuntcoders_GoogleShopping before="Mage_Adminhtml">Stuntcoders_GoogleShopping_Adminhtml</Stuntcoders_GoogleShopping>
                     </modules>
                 </args>
             </adminhtml>

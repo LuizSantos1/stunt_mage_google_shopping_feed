@@ -5,10 +5,23 @@ class Stuntcoders_GoogleShopping_Block_Index_Grid_Renderer_Link
 {
     public function render(Varien_Object $row)
     {
-        $this->getColumn()->setActions(array(array(
-            'url' => Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $row->getPath(),
-            'caption' => Mage::helper('stuntcoders_googleshopping')->__($row->getPath()),
-        )));
+        $file = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB) . $row->getPath();
+        $caption = Mage::helper('stuntcoders_googleshopping')->__($row->getPath());
+
+        $validator = new Zend_Validate_File_Exists();
+        $validator->addDirectory(Mage::getBaseDir() . DS);
+
+        if (!$validator->isValid($row->getPath())) {
+            $file = ' ';
+            $caption = Mage::helper('stuntcoders_googleshopping')->__('Xml file is not generated');
+        }
+
+        $this->getColumn()->setActions(
+            array(array(
+                'url' => $file,
+                'caption' => $caption,
+            ))
+        );
 
         return parent::render($row);
     }
