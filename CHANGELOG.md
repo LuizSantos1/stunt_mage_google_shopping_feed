@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file. This projec
 ## Unreleased
 ### ADDED:
 - Back button to Feed Form
+- Manged stock check in system config for deciding what products go in XML
 
 ### CHAGED:
 - Refactored Blocks and Controller
