@@ -1,13 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+## 0.2.0 - 2017-02-23
 ### ADDED:
 - Back button to Feed Form
-- Manged stock check in system config for deciding what products go in XML
+- Check for Managed products inventory stock
 
 ### CHANGED:
-- Refactored Blocks, Controller and Feed Model
+- Refactor Blocks, Controller and Feed Model
 
 ## 0.1.1 - 2017-02-22
 ### CHANGED:
