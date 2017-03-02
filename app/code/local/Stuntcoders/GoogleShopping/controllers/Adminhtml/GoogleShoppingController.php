@@ -74,6 +74,6 @@ class Stuntcoders_GoogleShopping_Adminhtml_GoogleShoppingController extends Mage
             $this->_getSession()->addError($e->getMessage());
         }
 
-        return $this->_redirectReferer('*/*/index');
+        $this->_redirectReferer('*/*/index');
     }
 }
