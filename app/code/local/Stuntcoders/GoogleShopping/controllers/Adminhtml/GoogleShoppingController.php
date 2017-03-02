@@ -61,13 +61,17 @@ class Stuntcoders_GoogleShopping_Adminhtml_GoogleShoppingController extends Mage
     public function generatexmlAction()
     {
         $feedId = $this->getRequest()->getParam('id');
-        $feed = Mage::getModel('stuntcoders_googleshopping/feed')->load($feedId);
 
-        $file = new Varien_Io_File();
-        $file->mkdir(dirname($feed->getPath()), 755, true);
-        $file->write($feed->getPath(), $feed->generateXml());
+        try {
+            $feed = Mage::getModel('stuntcoders_googleshopping/feed')->load($feedId);
 
-        Mage::getSingleton('core/session')->addSuccess($this->__('Google feed successfully generated'));
+            $file = new Varien_Io_File();
+            $file->mkdir(dirname($feed->getPath()), 755, true);
+            $file->write($feed->getPath(), $feed->generateXml());
+            Mage::getSingleton('core/session')->addSuccess($this->__('Google feed successfully generated'));
+        } catch (Exception $e) {
+            Mage::getSingleton('core/session')->addError($e->getMessage());
+        }
 
         return $this->_redirectReferer('*/*/index');
     }
