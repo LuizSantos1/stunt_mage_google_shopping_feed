@@ -84,7 +84,7 @@
                     <cron_expr>* * * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>stuntcoders_googleshopping/observer::setFeeds</model>
+                    <model>stuntcoders_googleshopping/observer::generateFeeds</model>
                 </run>
             </stuntcoders_googleshopping>
         </jobs>
