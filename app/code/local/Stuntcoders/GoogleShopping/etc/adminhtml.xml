@@ -10,5 +10,24 @@
                 </googleshopping>
             </children>
         </catalog>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <stuntcoders_googleshopping>
+                                            <title>Googleshopping Feed</title>
+                                        </stuntcoders_googleshopping>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
     </menu>
 </config>

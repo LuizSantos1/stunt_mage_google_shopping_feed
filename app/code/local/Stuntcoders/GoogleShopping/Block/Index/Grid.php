@@ -51,6 +51,6 @@ class Stuntcoders_GoogleShopping_Block_Index_Grid extends Mage_Adminhtml_Block_W
 
     public function getRowUrl($row)
     {
-        return $this->getUrl('*/*/add', array('id' => $row->getId()));
+        return $this->getUrl('*/*/new', array('id' => $row->getId()));
     }
 }

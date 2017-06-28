@@ -8,7 +8,7 @@ class Stuntcoders_GoogleShopping_Adminhtml_GoogleShoppingController extends Mage
         $this->renderLayout();
     }
 
-    public function addAction()
+    public function newAction()
     {
         $feedId = $this->getRequest()->getParam('id');
         if ($feedId) {
@@ -36,16 +36,15 @@ class Stuntcoders_GoogleShopping_Adminhtml_GoogleShoppingController extends Mage
         $errors = $feed->validate();
         if (!empty($errors)) {
             foreach ($errors as $error) {
-                $this->_getSession()->addError($error);
+                Mage::getSingleton('core/session')->addError($error);
             }
 
-            $this->_redirect('*/*/add');
-            return;
+            return $this->_redirect('*/*/add');
         }
 
         $feed->save();
 
-        $this->_redirect('*/*/index');
+        return $this->_redirect('*/*/index');
     }
 
     public function deleteAction()
@@ -53,10 +52,10 @@ class Stuntcoders_GoogleShopping_Adminhtml_GoogleShoppingController extends Mage
         $feedId = $this->getRequest()->getParam('id');
         if ($feedId) {
             Mage::getModel('stuntcoders_googleshopping/feed')->setId($feedId)->delete();
-            $this->_getSession()->addSuccess($this->__('Feed successfully deleted'));
+            Mage::getSingleton('core/session')->addSuccess($this->__('Feed successfully deleted'));
         }
 
-        $this->_redirect('*/*/index');
+        return $this->_redirect('*/*/index');
     }
 
     public function generatexmlAction()
@@ -67,13 +66,13 @@ class Stuntcoders_GoogleShopping_Adminhtml_GoogleShoppingController extends Mage
             $feed = Mage::getModel('stuntcoders_googleshopping/feed')->load($feedId);
 
             $file = new Varien_Io_File();
-            $file->mkdir(dirname($feed->getPath()), 755);
+            $file->mkdir(dirname($feed->getPath()), 755, true);
             $file->write($feed->getPath(), $feed->generateXml());
-            $this->_getSession()->addSuccess($this->__('Google feed successfully generated'));
+            Mage::getSingleton('core/session')->addSuccess($this->__('Google feed successfully generated'));
         } catch (Exception $e) {
-            $this->_getSession()->addError($e->getMessage());
+            Mage::getSingleton('core/session')->addError($e->getMessage());
         }
 
-        $this->_redirectReferer('*/*/index');
+        return $this->_redirectReferer('*/*/index');
     }
 }

@@ -2,15 +2,12 @@
 
 class Stuntcoders_GoogleShopping_Block_Index extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-    protected function _prepareLayout()
+    public function __construct()
     {
-        $addButton = $this->getLayout()->createBlock('adminhtml/widget_button');
-        $addButton ->setData(array(
-            'label' => Mage::helper('stuntcoders_googleshopping')->__('Add New Feed'),
-            'onclick' => "setLocation('" . $this->getUrl('*/*/add') . "')",
-            'class' => 'add'
-        ));
+        $this->_blockGroup = 'stuntcoders_googleshopping';
+        $this->_controller = 'index';
+        $this->_headerText = $this->__('Google Shopping Feed');
 
-        $this->setChild('googleshopping.addnew', $addButton);
+        return parent::__construct();
     }
 }

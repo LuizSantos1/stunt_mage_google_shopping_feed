@@ -4,6 +4,8 @@ $installer = $this;
 
 $installer->startSetup();
 
+$installer->getConnection()->dropTable($installer->getTable('stuntcoders_googleshopping/feed'));
+
 $table = $installer->getConnection()
     ->newTable($installer->getTable('stuntcoders_googleshopping/feed'))
     ->addColumn('id', Varien_Db_Ddl_Table::TYPE_INTEGER, null, array(

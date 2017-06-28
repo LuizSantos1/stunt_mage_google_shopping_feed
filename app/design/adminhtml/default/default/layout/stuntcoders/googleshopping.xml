@@ -2,18 +2,16 @@
 <layout version="0.1.0">
     <adminhtml_googleshopping_index>
         <reference name="content">
-            <block type="stuntcoders_googleshopping/index" name="stuntcoders.googleshopping.index"
-                   template="stuntcoders/googleshopping/index.phtml">
+            <block type="stuntcoders_googleshopping/index" name="stuntcoders.googleshopping.index">
                 <block type="stuntcoders_googleshopping/index_grid" name="stuntcoders.googleshopping.index.grid" />
             </block>
         </reference>
     </adminhtml_googleshopping_index>
-    <adminhtml_googleshopping_add>
+    <adminhtml_googleshopping_new>
         <reference name="content">
-            <block type="stuntcoders_googleshopping/addForm" name="stuntcoders.import.form"
-                   template="stuntcoders/googleshopping/add.phtml">
+            <block type="stuntcoders_googleshopping/addForm" name="stuntcoders.import.form" template="stuntcoders/googleshopping/add.phtml">
                 <block type="stuntcoders_googleshopping/add_form" name="stuntcoders.googleshopping.add" />
             </block>
         </reference>
-    </adminhtml_googleshopping_add>
+    </adminhtml_googleshopping_new>
 </layout>

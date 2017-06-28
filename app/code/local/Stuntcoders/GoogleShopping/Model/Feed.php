@@ -14,6 +14,8 @@
  */
 class Stuntcoders_GoogleShopping_Model_Feed extends Mage_Core_Model_Abstract
 {
+    const PRICE_ATTRIBUTE_CODE = 'price';
+
     protected function _construct()
     {
         $this->_init('stuntcoders_googleshopping/feed');
@@ -83,9 +85,10 @@ class Stuntcoders_GoogleShopping_Model_Feed extends Mage_Core_Model_Abstract
     }
 
     /**
-     * @param Mage_Catalog_Model_Resource_Eav_Mysql4_Product_Collection $productCollection
+     * @param Mage_Catalog_Model_Resource_Product_Collection $productCollection
      * @param DOMNode $channel
      * @param DOMDocument $doc
+     * @throws Exception
      */
     protected function _prepareProductForXml($productCollection, $channel, $doc)
     {
@@ -95,12 +98,11 @@ class Stuntcoders_GoogleShopping_Model_Feed extends Mage_Core_Model_Abstract
         foreach ($productCollection as $product) {
             $item = $channel->appendChild($doc->createElement('item'));
 
-            $item->appendChild($doc->createElement('g:id', $product->getSku()));
-
-            if (count($attributes)) {
-                $this->_prepareAttributesForXml($attributes, $product, $item, $doc);
+            if (!count($attributes)) {
+                throw new Exception(Mage::helper('stuntcoders_googleshopping')->__('No Feed Attributes defined'));
             }
 
+            $this->_prepareAttributesForXml($attributes, $product, $item, $doc);
             $item->appendChild($doc->createElement('g:link', $product->getUrlInStore()));
 
             try {
@@ -117,39 +119,33 @@ class Stuntcoders_GoogleShopping_Model_Feed extends Mage_Core_Model_Abstract
                     )
                 ));
             };
-
-            $item->appendChild($doc->createElement(
-                'g:price',
-                number_format((float) $product->getPrice(), 2)
-                . ' ' . Mage::app()->getStore()->getCurrentCurrency()->getCode()
-            ));
         }
     }
 
     /**
      * @param array $attributes
      * @param Mage_Catalog_Model_Product $product
-     * @param DOMDocument $item
+     * @param DOMNode $item
      * @param DOMDocument $doc
      */
     protected function _prepareAttributesForXml($attributes, $product, $item, $doc)
     {
         foreach ($attributes as $name => $value) {
-            $prefix = $this->_getPrefix($value);
-            $valuePrefix = $this->_getValueKey('value_prefix', $value);
+            $tagValue = Mage::helper('core/string')->truncate($this->_getTagValue($name, $value, $product), 4500);
             $type = $this->_getValueKey('type', $value);
-            $attribute = $this->_getValueKey('attribute', $value);
-            $default = $this->_getValueKey('default', $value);
+            $elementValue = $this->_getValueKey('value_prefix', $value) . $tagValue;
+            $tag = $doc->createElement($this->_getPrefix($value) . $name);
+            $itemTag = $item->appendChild($tag);
 
-            $tagValue = $this->_getTagValue($default, $attribute, $product);
-            if (empty($tagValue)) {
-                continue;
+            $data = $doc->createCDataSection($elementValue);
+            if (self::PRICE_ATTRIBUTE_CODE === $name) {
+                $data = $doc->createTextNode(number_format((float) $elementValue, 2)
+                    . ' ' . Mage::app()->getStore()->getCurrentCurrency()->getCode());
             }
 
-            $itemTag = $item->appendChild($doc->createElement($prefix . $name, $valuePrefix . $tagValue));
-
+            $tag->appendChild($data);
             if (!empty($type)) {
-                $itemTag->setAttribute('type', $value['type']);
+                $itemTag->setAttribute('type', $type);
             }
         }
     }
@@ -182,22 +178,51 @@ class Stuntcoders_GoogleShopping_Model_Feed extends Mage_Core_Model_Abstract
     }
 
     /**
-     * @param string $defaultValue
+     * @param string $name
+     * @param string $value
+     * @param Mage_Catalog_Model_Product $product
+     * @return string
+     */
+    protected function _getTagValue($name, $value, $product)
+    {
+        $attribute = $this->_getValueKey('attribute', $value);
+        $default = $this->_getValueKey('default', $value);
+        $fallback = $this->_getValueKey('fallback_attribute', $value);
+
+        if (!empty($default) && self::PRICE_ATTRIBUTE_CODE === $name) {
+            return $default;
+        }
+
+        if (!empty($this->_getAttributeText($attribute, $product))) {
+            return $this->_getAttributeText($attribute, $product);
+        }
+
+        if (!empty($this->_getAttributeText($fallback, $product))) {
+            return $this->_getAttributeText($fallback, $product);
+        }
+
+        return isset($default) ? $default : '';
+    }
+
+    /**
      * @param string $attribute
      * @param Mage_Catalog_Model_Product $product
      * @return string
      */
-    protected function _getTagValue($defaultValue, $attribute, $product)
+    protected function _getAttributeText($attribute, $product)
     {
-        $tagValue = isset($defaultValue) ? $defaultValue : '';
+        $value = '';
 
         if (!empty($attribute) && $product->getData($attribute)) {
-            $tagValue = $product->getData($attribute);
-            if ($product->getAttributeText($attribute)) {
-                $tagValue = $product->getAttributeText($attribute);
+            $value = $product->getData($attribute);
+
+            if (empty($value)) {
+                if ($product->getAttributeText($attribute)) {
+                    $value = $product->getAttributeText($attribute);
+                }
             }
         }
 
-        return Mage::helper('core/string')->truncate($tagValue, 400);
+        return $value;
     }
 }

@@ -20,7 +20,7 @@ class Stuntcoders_GoogleShopping_Block_Index_Grid_Renderer_Link
             array(array(
                 'url' => $file,
                 'caption' => $caption,
-            ))
+                ))
         );
 
         return parent::render($row);

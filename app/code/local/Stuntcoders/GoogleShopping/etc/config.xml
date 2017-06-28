@@ -46,25 +46,6 @@
                 </stuntcoders_googleshopping>
             </updates>
         </layout>
-        <acl>
-            <resources>
-                <admin>
-                    <children>
-                        <system>
-                            <children>
-                                <config>
-                                    <children>
-                                        <stuntcoders_googleshopping>
-                                            <title>Googleshopping Feed</title>
-                                        </stuntcoders_googleshopping>
-                                    </children>
-                                </config>
-                            </children>
-                        </system>
-                    </children>
-                </admin>
-            </resources>
-        </acl>
     </adminhtml>
     <admin>
         <routers>
@@ -81,10 +62,10 @@
         <jobs>
             <stuntcoders_googleshopping>
                 <schedule>
-                    <cron_expr>* * * * *</cron_expr>
+                    <cron_expr>0 0 * * *</cron_expr>
                 </schedule>
                 <run>
-                    <model>stuntcoders_googleshopping/observer::generateFeeds</model>
+                    <model>stuntcoders_googleshopping/observer::setFeeds</model>
                 </run>
             </stuntcoders_googleshopping>
         </jobs>
