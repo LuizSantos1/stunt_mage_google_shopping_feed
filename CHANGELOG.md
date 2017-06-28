@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased:
+### CHANGED:
+- Update module
+
 ## 0.2.0 - 2017-02-23
 ### ADDED:
 - Back button to Feed Form
